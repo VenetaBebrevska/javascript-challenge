@@ -1,22 +1,39 @@
-// grab references to the input element and the output div
-var text = d3.select("#text");
-var output = d3.select(".output");
+// from data.js
+var tableData = data;
 
-// Function to reverse a string
-function reverseString(str) {
-  return str.split("").reverse().join("");
-}
+// YOUR CODE HERE!
+var tbody = d3.select("tbody");
 
-// Function to handle input change
-function handleChange(event) {
-  // grab the value of the input field
-  var inputText = d3.event.target.value;
+// Console log the UFO data from data.js
+console.log(data);
 
-  // reverse the input string
-  var reversedInput = reverseString(inputText);
+data.forEach(function(ufoSighting) {
+    console.log(ufoSighting);
+    var row = tbody.append("tr");
 
-  // Set the output text to the reversed input string
-  output.text(reversedInput);
-}
+    Object.entries(ufoSighting).forEach(function([key, value]) {
+        console.log(key.value);
+        var cell = row.append("td");
+        cell.text(value);        
+    })    
+})
 
-text.on("change", handleChange);
+// Getting reference to the button
+var button = d3.select("#filter-btn");
+
+// Attaching the event to the handler
+button.on("click", function() {
+
+// Getting reference to the input
+    var input = d3.select("#form-control");
+
+// Get the value property of the input and filter
+    var inputValue = input.property("value");
+
+    console.log(inputValue);
+    console.log(tableData);
+
+    var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
+
+    console.log(filteredData);
+})
